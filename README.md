@@ -1,11 +1,10 @@
-# 👋🧩 Morphe Patches template
+# 👋🧩 LaKaka's Shitty Patches
 
-Template repository for Morphe Patches.
+Repository for LaKaka's crappy slop patches compatible with Morphe.
 
 ## ❓ About
 
-This is a template to create a new Morphe Patches repository.
-TODO: Update this about section with a brief introduction/summary about this repo and what it offers.
+Hello! Everything here is AI generated. I am using this to learn so I can hopefully evolve past vibecoding, but all patches here work with Morphe if you wanna use 'em.
 
 ## 🩹 Patches list
 
@@ -80,9 +79,9 @@ patches to Morphe (update the links below after creating your new patches repo):
 
 #### How to use these patches
 
-Click here to add these patches to Morphe: https://morphe.software/add-source?github=xyz-user/xyz-patches
+Click here to add these patches to Morphe: https://morphe.software/add-source?github=LaKakaReal/LaKakaShitPatches
 
-Or manually add this repository url as a patch source in Morphe: https://github.com/xyz-user/xyz-patches
+Or manually add this repository url as a patch source in Morphe: https://github.com/LaKakaReal/LaKakaShitPatches
 
 ### 📙 Contributing
 
@@ -91,9 +90,9 @@ You can find the contribution guidelines [here](CONTRIBUTING.md).
 
 ### 🛠️ Building
 
-To build UserXYZ Morphe Patches,
+To build LaKaka's Morphe Patches,
 you can follow the [Morphe documentation](https://github.com/MorpheApp/morphe-documentation).
 
 ## 📜 License
 
-UserXYZ Morphe Patches are licensed under the [GNU General Public License v3.0](LICENSE)
+LaKaka's Morphe Patches are licensed under the [GNU General Public License v3.0](LICENSE)
