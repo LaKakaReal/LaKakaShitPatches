@@ -1,13 +1,13 @@
-group = "app.template"
+group = "app.lakakareal.morphe-patches"
 
 patches {
     about {
-        name = "UserXYZ Patches"
+        name = "LaKaka's Patches"
         description = "Patches for apps I like"
-        source = "git@github.com:UserXYZ/morphe-patches.git"
-        author = "Awesome dev"
+        source = "https://github.com/LaKakaReal/LaKakaShitPatches"
+        author = "LaKakaReal"
         contact = "na"
-        website = "na"
+        website = "https://github.com/LaKakaReal/LaKakaShitPatches"
         license = "GPLv3"
     }
 }
