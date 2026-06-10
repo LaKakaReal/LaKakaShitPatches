@@ -1,6 +1,7 @@
 package app.template.patches.wallpaper
 
 import app.morphe.patcher.Fingerprint
+import app.morphe.patcher.literal
 import app.morphe.patcher.methodCall
 import com.android.tools.smali.dexlib2.AccessFlags
 
@@ -46,8 +47,7 @@ object IsPremiumOwnedFingerprint : Fingerprint(
     strings = listOf("premium_lifetime")
 )
 
-/** Matches `n40.j()` – updates the premium boolean from purchased sets.
-    Distinguished from `<clinit>` by the `Lyr5;->j` call unique to this method. */
+/** Matches `n40.j()` – updates the premium boolean from purchased sets */
 object PremiumSetterFingerprint : Fingerprint(
     definingClass = "Ln40;",
     returnType = "V",
@@ -59,4 +59,21 @@ object PremiumSetterFingerprint : Fingerprint(
             returnType = "Z"
         )
     )
+)
+
+/** Matches the static initializer of `fo6` that uses the missing `ic_featured` drawable */
+object Fo6ClinitFingerprint : Fingerprint(
+    definingClass = "Lfo6;",
+    strings = listOf("Premium"),
+    filters = listOf(
+        literal(0x7f070090)   // ic_featured
+    )
+)
+
+/** Matches the error dialog method in LicenseActivity */
+object LicenseErrorDialogFingerprint : Fingerprint(
+    definingClass = "Lcom/pairip/licensecheck/LicenseActivity;",
+    strings = listOf("Something went wrong"),
+    returnType = "V",
+    parameters = listOf()
 )

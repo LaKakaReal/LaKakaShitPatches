@@ -1,31 +1,26 @@
 package app.template.patches.wallpaper
 
-import app.template.patches.shared.Constants
 import app.morphe.patcher.extensions.InstructionExtensions.addInstructions
 import app.morphe.patcher.extensions.InstructionExtensions.instructions
 import app.morphe.patcher.extensions.InstructionExtensions.removeInstructions
+import app.morphe.patcher.extensions.InstructionExtensions.replaceInstruction
 import app.morphe.patcher.patch.bytecodePatch
+import app.template.patches.shared.Constants.DEPTH_WALLPAPERS_COMPATIBILITY
+import com.android.tools.smali.dexlib2.iface.instruction.OneRegisterInstruction
 
 /**
- * Unlocks all premium features in Depth Wallpapers & Live Clock.
- *
- * Layers:
- *  1. Force `Category.isPremium()` → always true.
- *  2. Disable Pairip license check → no Play Store redirect.
- *  3. Force `dz2.m4037n()` → always return full access.
- *  4. Bypass final "owns premium" gate `n40.m10268e()`.
- *  5. Force `n40.j()` to always set the premium LiveData to true.
+ * Unlocks all premium wallpapers and manages internal execution gates.
  */
 @Suppress("unused")
 val unlockPremiumPatch = bytecodePatch(
     name = "Unlock Premium",
-    description = "Unlocks all premium wallpapers and removes license verification.",
+    description = "Unlocks all premium wallpapers and removes license verification features.",
     default = true
 ) {
-    compatibleWith(Constants.DEPTH_WALLPAPERS_COMPATIBILITY)
+    compatibleWith(DEPTH_WALLPAPERS_COMPATIBILITY)
 
     execute {
-        // ── Layer 1: Make every category premium ─────────────────
+        // ── Layer 1: Force Category.isPremium() -> always true ───────────────
         IsPremiumFingerprint.method.apply {
             removeInstructions(0, instructions.count())
             addInstructions(
@@ -37,13 +32,13 @@ val unlockPremiumPatch = bytecodePatch(
             )
         }
 
-        // ── Layer 2: Disable Pairip license check ─────────────────
+        // ── Layer 2: Disable Pairip license verification routines ────────────
         LicenseClientFingerprint.method.apply {
             removeInstructions(0, instructions.count())
             addInstructions(0, "return-void")
         }
 
-        // ── Layer 3: Force premium access gate ────────────────────
+        // ── Layer 3: Bypass premium layout verification checks ───────────────
         M4037NFingerprint.method.apply {
             removeInstructions(0, instructions.count())
             addInstructions(
@@ -58,7 +53,7 @@ val unlockPremiumPatch = bytecodePatch(
             )
         }
 
-        // ── Layer 4: Bypass final "owns premium" gate ─────────────
+        // ── Layer 4: Clear "owns premium" global verification gates ───────────
         IsPremiumOwnedFingerprint.method.apply {
             removeInstructions(0, instructions.count())
             addInstructions(
@@ -70,7 +65,7 @@ val unlockPremiumPatch = bytecodePatch(
             )
         }
 
-        // ── Layer 5: Force the premium LiveData to TRUE ───────────
+        // ── Layer 5: Force the premium LiveData state mapping to true ─────────
         PremiumSetterFingerprint.method.apply {
             removeInstructions(0, instructions.count())
             addInstructions(
@@ -85,6 +80,22 @@ val unlockPremiumPatch = bytecodePatch(
                 return-void
                 """.trimIndent()
             )
+        }
+
+        // ── Layer 6: Clear category view instantiation references ────────────
+        // To safely bypass the resource/cast traps, we no-op the initialization assignments
+        val match = Fo6ClinitFingerprint.instructionMatches.first()
+        val index = match.index
+        val register = match.getInstruction<OneRegisterInstruction>().registerA
+        Fo6ClinitFingerprint.method.replaceInstruction(
+            index,
+            "const v$register, 0x7f070097"
+        )
+
+        // ── Layer 7: Disable validation warning modal layouts ────────────────
+        LicenseErrorDialogFingerprint.method.apply {
+            removeInstructions(0, instructions.count())
+            addInstructions(0, "return-void")
         }
     }
 }
