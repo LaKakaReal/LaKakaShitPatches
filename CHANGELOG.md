@@ -1,3 +1,13 @@
+## [1.0.0-dev.2](https://github.com/LaKakaReal/LaKakaShitPatches/compare/v1.0.0-dev.1...v1.0.0-dev.2) (2026-06-10)
+
+### 🐛 Bug Fixes
+
+* included new fingerprints forgot to publish them smh ([b13aac5](https://github.com/LaKakaReal/LaKakaShitPatches/commit/b13aac547be84e9235fbeea2adbc3c5eed88622b))
+
+### ✨ New Features
+
+* fix pairip integrity resource crash using free asset fallback ([4837b8d](https://github.com/LaKakaReal/LaKakaShitPatches/commit/4837b8d503c6c1e27e90da11c60d184fc52de6d2))
+
 ## 1.0.0-dev.1 (2026-06-07)
 
 ### ✨ New Features

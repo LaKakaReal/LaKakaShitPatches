@@ -1,9 +1,9 @@
 {
-  "version": "1.0.0-dev.1",
+  "version": "1.0.0-dev.2",
   "patches": [
     {
       "name": "Unlock Premium",
-      "description": "Unlocks all premium wallpapers and removes license verification.",
+      "description": "Unlocks all premium wallpapers and removes license verification features.",
       "default": true,
       "dependencies": [],
       "compatiblePackages": [

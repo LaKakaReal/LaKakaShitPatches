@@ -9,14 +9,14 @@ Hello! Everything here is AI generated. I am using this to learn so I can hopefu
 ## 🩹 Patches list
 
 <!-- PATCHES_START EXPANDED -->
-> **[v1.0.0-dev.1](https://github.com/LaKakaReal/LaKakaShitPatches/releases/tag/v1.0.0-dev.1)**&nbsp;&nbsp;•&nbsp;&nbsp;`dev`&nbsp;&nbsp;•&nbsp;&nbsp;1 patches total
+> **[v1.0.0-dev.2](https://github.com/LaKakaReal/LaKakaShitPatches/releases/tag/v1.0.0-dev.2)**&nbsp;&nbsp;•&nbsp;&nbsp;`dev`&nbsp;&nbsp;•&nbsp;&nbsp;1 patches total
 <details open>
 <summary>📦 Depth Wallpapers & Live Clock&nbsp;&nbsp;•&nbsp;&nbsp;1 patch</summary>
 <br>
 
 | 💊&nbsp;Patch | 📜&nbsp;Description | ⚙️&nbsp;Options |
 |----------|----------------|-----------|
-| [Unlock Premium](#unlock-premium) | Unlocks all premium wallpapers and removes license verification. |  |
+| [Unlock Premium](#unlock-premium) | Unlocks all premium wallpapers and removes license verification features. |  |
 
 </details>
 
