@@ -1,7 +1,7 @@
 {
-  "created_at": "2026-06-10T21:01:16",
-  "description": "## [1.1.0-dev.1](https://github.com/LaKakaReal/LaKakaShitPatches/compare/v1.0.0...v1.1.0-dev.1) (2026-06-10)\n\n### 🐛 Bug Fixes\n\n* included new fingerprints forgot to publish them smh ([b13aac5](https://github.com/LaKakaReal/LaKakaShitPatches/commit/b13aac547be84e9235fbeea2adbc3c5eed88622b))\n\n### ✨ New Features\n\n* fix pairip integrity resource crash using free asset fallback ([4837b8d](https://github.com/LaKakaReal/LaKakaShitPatches/commit/4837b8d503c6c1e27e90da11c60d184fc52de6d2))",
-  "download_url": "https://github.com/LaKakaReal/LaKakaShitPatches/releases/download/v1.1.0-dev.1/patches-1.1.0-dev.1.mpp",
+  "created_at": "2026-06-10T21:03:20",
+  "description": "## [1.1.0](https://github.com/LaKakaReal/LaKakaShitPatches/compare/v1.0.0...v1.1.0) (2026-06-10)\n\n### 🐛 Bug Fixes\n\n* included new fingerprints forgot to publish them smh ([b13aac5](https://github.com/LaKakaReal/LaKakaShitPatches/commit/b13aac547be84e9235fbeea2adbc3c5eed88622b))\n\n### ✨ New Features\n\n* fix pairip integrity resource crash using free asset fallback ([4837b8d](https://github.com/LaKakaReal/LaKakaShitPatches/commit/4837b8d503c6c1e27e90da11c60d184fc52de6d2))",
+  "download_url": "https://github.com/LaKakaReal/LaKakaShitPatches/releases/download/v1.1.0/patches-1.1.0.mpp",
   "signature_download_url": "",
-  "version": "1.1.0-dev.1"
+  "version": "1.1.0"
 }
