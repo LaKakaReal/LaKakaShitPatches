@@ -1,3 +1,9 @@
+## [1.1.1-dev.1](https://github.com/LaKakaReal/LaKakaShitPatches/compare/v1.1.0...v1.1.1-dev.1) (2026-06-12)
+
+### 🐛 Bug Fixes
+
+* push target version constraints ([f7ce9cd](https://github.com/LaKakaReal/LaKakaShitPatches/commit/f7ce9cdd7e00f3aa98a971651364874457121865))
+
 ## [1.1.0](https://github.com/LaKakaReal/LaKakaShitPatches/compare/v1.0.0...v1.1.0) (2026-06-10)
 
 ### 🐛 Bug Fixes
