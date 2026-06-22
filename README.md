@@ -14,6 +14,11 @@ Hello! Everything here is AI generated. I am using this to learn so I can hopefu
 <summary>📦 Depth Wallpapers & Live Clock&nbsp;&nbsp;•&nbsp;&nbsp;1 patch</summary>
 <br>
 
+**🎯 Supported versions:**
+
+| 2.1.01 |
+| :---: |
+
 | 💊&nbsp;Patch | 📜&nbsp;Description | ⚙️&nbsp;Options |
 |----------|----------------|-----------|
 | [Unlock Premium](#unlock-premium) | Unlocks all premium wallpapers and removes license verification features. |  |

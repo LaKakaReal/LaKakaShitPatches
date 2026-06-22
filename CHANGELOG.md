@@ -5,6 +5,7 @@
 * **wallpaper:** added universal version compatibility ([d4bd326](https://github.com/LaKakaReal/LaKakaShitPatches/commit/d4bd326de1fee5c1ad5ec95e9c46af88b36eb329))
 
 ## [1.1.1-dev.1](https://github.com/LaKakaReal/LaKakaShitPatches/compare/v1.1.0...v1.1.1-dev.1) (2026-06-12)
+## [1.1.1](https://github.com/LaKakaReal/LaKakaShitPatches/compare/v1.1.0...v1.1.1) (2026-06-12)
 
 ### 🐛 Bug Fixes
 
@@ -30,7 +31,6 @@
 
 * fix pairip integrity resource crash using free asset fallback ([4837b8d](https://github.com/LaKakaReal/LaKakaShitPatches/commit/4837b8d503c6c1e27e90da11c60d184fc52de6d2))
 
-<<<<<<< dev
 ## [1.0.0-dev.2](https://github.com/LaKakaReal/LaKakaShitPatches/compare/v1.0.0-dev.1...v1.0.0-dev.2) (2026-06-10)
 
 ### 🐛 Bug Fixes
@@ -42,9 +42,7 @@
 * fix pairip integrity resource crash using free asset fallback ([4837b8d](https://github.com/LaKakaReal/LaKakaShitPatches/commit/4837b8d503c6c1e27e90da11c60d184fc52de6d2))
 
 ## 1.0.0-dev.1 (2026-06-07)
-=======
 ## 1.0.0 (2026-06-07)
->>>>>>> main
 
 ### ✨ New Features
 
