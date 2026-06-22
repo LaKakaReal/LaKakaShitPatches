@@ -1,11 +1,24 @@
 package app.template.patches.wallpaper
 
 import app.morphe.patcher.Fingerprint
-import app.morphe.patcher.literal
 import app.morphe.patcher.methodCall
 import com.android.tools.smali.dexlib2.AccessFlags
 
-/** Matches `Category.isPremium()` */
+val LicenseActivityOnCreateFingerprint = Fingerprint(
+    definingClass = "Lcom/pairip/licensecheck/LicenseActivity;",
+    name = "onCreate",
+    parameters = listOf("Landroid/os/Bundle;"),
+    returnType = "V",
+    accessFlags = listOf(AccessFlags.PUBLIC)
+)
+
+val LicenseClientFingerprint = Fingerprint(
+    definingClass = "Lcom/pairip/licensecheck/LicenseClient;",
+    accessFlags = listOf(AccessFlags.PUBLIC, AccessFlags.STATIC),
+    returnType = "V",
+    parameters = listOf("Landroid/content/Context;")
+)
+
 object IsPremiumFingerprint : Fingerprint(
     definingClass = "Lcom/jndapp/depth/live/wallpaper/model/Category;",
     strings = listOf("free"),
@@ -13,67 +26,45 @@ object IsPremiumFingerprint : Fingerprint(
     parameters = listOf()
 )
 
-/** Matches `LicenseClient.checkLicense(Context)` */
-object LicenseClientFingerprint : Fingerprint(
-    definingClass = "Lcom/pairip/licensecheck/LicenseClient;",
-    accessFlags = listOf(AccessFlags.PUBLIC, AccessFlags.STATIC),
-    returnType = "V",
-    parameters = listOf("Landroid/content/Context;")
-)
-
-/** Matches `dz2.m4037n(Category, boolean, Set)` */
-object M4037NFingerprint : Fingerprint(
-    definingClass = "Ldz2;",
-    returnType = "Lrn4;",
-    parameters = listOf(
-        "Lcom/jndapp/depth/live/wallpaper/model/Category;",
-        "Z",
-        "Ljava/util/Set;"
-    ),
-    filters = listOf(
-        methodCall(
-            definingClass = "Lcom/jndapp/depth/live/wallpaper/model/Category;",
-            name = "isPremium",
-            returnType = "Z"
-        )
-    )
-)
-
-/** Matches `n40.m10268e()` – the "owns premium" check */
 object IsPremiumOwnedFingerprint : Fingerprint(
-    definingClass = "Ln40;",
+    strings = listOf("premium_lifetime"),
     returnType = "Z",
     parameters = listOf(),
-    strings = listOf("premium_lifetime")
-)
-
-/** Matches `n40.j()` – updates the premium boolean from purchased sets */
-object PremiumSetterFingerprint : Fingerprint(
-    definingClass = "Ln40;",
-    returnType = "V",
-    parameters = listOf(),
     filters = listOf(
         methodCall(
-            definingClass = "Lyr5;",
-            name = "j",
+            name = "contains",
             returnType = "Z"
         )
     )
 )
 
-/** Matches the static initializer of `fo6` that uses the missing `ic_featured` drawable */
-object Fo6ClinitFingerprint : Fingerprint(
-    definingClass = "Lfo6;",
-    strings = listOf("Premium"),
+object PremiumSetterFingerprint : Fingerprint(
+    strings = listOf("premium_lifetime"),
+    returnType = "V",
+    parameters = listOf(),
     filters = listOf(
-        literal(0x7f070090)   // ic_featured
+        methodCall(
+            name = "contains",
+            returnType = "Z"
+        ),
+        methodCall(
+            definingClass = "Ljava/lang/Boolean;",
+            name = "valueOf",
+            parameters = listOf("Z"),
+            returnType = "Ljava/lang/Boolean;"
+        )
     )
 )
 
-/** Matches the error dialog method in LicenseActivity */
-object LicenseErrorDialogFingerprint : Fingerprint(
-    definingClass = "Lcom/pairip/licensecheck/LicenseActivity;",
-    strings = listOf("Something went wrong"),
-    returnType = "V",
-    parameters = listOf()
+object Fo6ClinitFingerprint : Fingerprint(
+    strings = listOf("Favourite", "Recent", "Premium", "Random"),
+    name = "<clinit>"
+)
+
+object NavigationSetupFingerprint : Fingerprint(
+    strings = listOf("Collection", "Wallpapers", "Studio", "Settings")
+)
+
+object Km6InvokeFingerprint : Fingerprint(
+    strings = listOf("Premium wallpaper", "Play Video Preview")
 )
