@@ -1,3 +1,9 @@
+## [1.2.0-dev.1](https://github.com/LaKakaReal/LaKakaShitPatches/compare/v1.1.1-dev.1...v1.2.0-dev.1) (2026-06-22)
+
+### ✨ New Features
+
+* **wallpaper:** added universal version compatibility ([d4bd326](https://github.com/LaKakaReal/LaKakaShitPatches/commit/d4bd326de1fee5c1ad5ec95e9c46af88b36eb329))
+
 ## [1.1.1-dev.1](https://github.com/LaKakaReal/LaKakaShitPatches/compare/v1.1.0...v1.1.1-dev.1) (2026-06-12)
 
 ### 🐛 Bug Fixes
