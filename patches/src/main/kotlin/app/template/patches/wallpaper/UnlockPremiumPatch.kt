@@ -1,16 +1,19 @@
 package app.template.patches.wallpaper
 
 import app.morphe.patcher.extensions.InstructionExtensions.addInstructions
+import app.morphe.patcher.extensions.InstructionExtensions.getInstruction
 import app.morphe.patcher.extensions.InstructionExtensions.instructions
-import app.morphe.patcher.extensions.InstructionExtensions.removeInstructions
 import app.morphe.patcher.extensions.InstructionExtensions.replaceInstruction
 import app.morphe.patcher.patch.bytecodePatch
 import app.template.patches.shared.Constants.DEPTH_WALLPAPERS_COMPATIBILITY
 import com.android.tools.smali.dexlib2.iface.instruction.OneRegisterInstruction
+import com.android.tools.smali.dexlib2.iface.instruction.NarrowLiteralInstruction
 
-/**
- * Unlocks all premium wallpapers and manages internal execution gates.
- */
+private fun dismissActivity() =
+    "invoke-super {p0, p1}, Landroid/app/Activity;->onCreate(Landroid/os/Bundle;)V\n" +
+    "invoke-virtual {p0}, Landroid/app/Activity;->finish()V\n" +
+    "return-void"
+
 @Suppress("unused")
 val unlockPremiumPatch = bytecodePatch(
     name = "Unlock Premium",
@@ -21,81 +24,87 @@ val unlockPremiumPatch = bytecodePatch(
 
     execute {
         // ── Layer 1: Force Category.isPremium() -> always true ───────────────
-        IsPremiumFingerprint.method.apply {
-            removeInstructions(0, instructions.count())
-            addInstructions(
-                0,
-                """
-                const/4 v0, 0x1
-                return v0
-                """.trimIndent()
-            )
+        runCatching {
+            IsPremiumFingerprint.method.apply {
+                addInstructions(0, "const/4 v0, 0x1\nreturn v0")
+            }
         }
 
         // ── Layer 2: Disable Pairip license verification routines ────────────
-        LicenseClientFingerprint.method.apply {
-            removeInstructions(0, instructions.count())
-            addInstructions(0, "return-void")
+        runCatching {
+            LicenseClientFingerprint.method.apply {
+                addInstructions(0, "return-void")
+            }
         }
 
-        // ── Layer 3: Bypass premium layout verification checks ───────────────
-        M4037NFingerprint.method.apply {
-            removeInstructions(0, instructions.count())
-            addInstructions(
-                0,
-                """
-                const/4 v0, 0x1
-                const/4 v1, 0x1
-                new-instance v2, Lrn4;
-                invoke-direct {v2, v0, v1, p1}, Lrn4;-><init>(ZZZ)V
-                return-object v2
-                """.trimIndent()
-            )
+        // ── Layer 3: Force "owns premium" check -> always true ──────────────
+        runCatching {
+            IsPremiumOwnedFingerprint.method.apply {
+                addInstructions(0, "const/4 v0, 0x1\nreturn v0")
+            }
         }
 
-        // ── Layer 4: Clear "owns premium" global verification gates ───────────
-        IsPremiumOwnedFingerprint.method.apply {
-            removeInstructions(0, instructions.count())
-            addInstructions(
-                0,
-                """
-                const/4 v0, 0x1
-                return v0
-                """.trimIndent()
-            )
+        // ── Layer 4: PairIP LicenseActivity kill-switch ─────────────────────
+        runCatching {
+            LicenseActivityOnCreateFingerprint.method.apply {
+                addInstructions(0, dismissActivity())
+            }
         }
 
-        // ── Layer 5: Force the premium LiveData state mapping to true ─────────
-        PremiumSetterFingerprint.method.apply {
-            removeInstructions(0, instructions.count())
-            addInstructions(
-                0,
-                """
-                const/4 v0, 0x1
-                invoke-static {v0}, Ljava/lang/Boolean;->valueOf(Z)Ljava/lang/Boolean;
-                move-result-object v0
-                iget-object p0, p0, Ln40;->C:Lyr5;
-                const/4 v1, 0x0
-                invoke-virtual {p0, v1, v0}, Lyr5;->j(Ljava/lang/Object;Ljava/lang/Object;)Z
-                return-void
-                """.trimIndent()
-            )
+        // ── Layer 5: Force premium LiveData to true ──────────────────────────
+        runCatching {
+            val method = PremiumSetterFingerprint.method
+            val containsMatch = PremiumSetterFingerprint.instructionMatches[0]
+            val containsIndex = containsMatch.index
+            val moveResultIndex = containsIndex + 1
+            val moveResultInstr = method.getInstruction<OneRegisterInstruction>(moveResultIndex)
+            val register = moveResultInstr.registerA
+            method.addInstructions(moveResultIndex + 1, "const/4 v$register, 0x1")
         }
 
-        // ── Layer 6: Clear category view instantiation references ────────────
-        // To safely bypass the resource/cast traps, we no-op the initialization assignments
-        val match = Fo6ClinitFingerprint.instructionMatches.first()
-        val index = match.index
-        val register = match.getInstruction<OneRegisterInstruction>().registerA
-        Fo6ClinitFingerprint.method.replaceInstruction(
-            index,
-            "const v$register, 0x7f070097"
-        )
+        // ── Layer 6: Targeted drawable trap sweeper ─────────────────────────
+        val trapDrawableIds = setOf(0x7f070090)
 
-        // ── Layer 7: Disable validation warning modal layouts ────────────────
-        LicenseErrorDialogFingerprint.method.apply {
-            removeInstructions(0, instructions.count())
-            addInstructions(0, "return-void")
+        runCatching {
+            Fo6ClinitFingerprint.method.let { method ->
+                method.instructions.forEachIndexed { index, instruction ->
+                    if (instruction is OneRegisterInstruction && instruction is NarrowLiteralInstruction) {
+                        val literal = instruction.narrowLiteral
+                        if (literal in trapDrawableIds) {
+                            val register = instruction.registerA
+                            method.replaceInstruction(index, "const v$register, 0x0108003e")
+                        }
+                    }
+                }
+            }
+        }
+
+        runCatching {
+            NavigationSetupFingerprint.method.let { method ->
+                method.instructions.forEachIndexed { index, instruction ->
+                    if (instruction is OneRegisterInstruction && instruction is NarrowLiteralInstruction) {
+                        val literal = instruction.narrowLiteral
+                        if (literal in trapDrawableIds) {
+                            val register = instruction.registerA
+                            method.replaceInstruction(index, "const v$register, 0x0108003e")
+                        }
+                    }
+                }
+            }
+        }
+
+        runCatching {
+            Km6InvokeFingerprint.method.let { method ->
+                method.instructions.forEachIndexed { index, instruction ->
+                    if (instruction is OneRegisterInstruction && instruction is NarrowLiteralInstruction) {
+                        val literal = instruction.narrowLiteral
+                        if (literal in trapDrawableIds) {
+                            val register = instruction.registerA
+                            method.replaceInstruction(index, "const v$register, 0x0108003e")
+                        }
+                    }
+                }
+            }
         }
     }
 }

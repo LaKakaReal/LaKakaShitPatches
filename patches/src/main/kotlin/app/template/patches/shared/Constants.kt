@@ -10,6 +10,6 @@ object Constants {
         name = "Depth Wallpapers & Live Clock",
         packageName = "com.jndapp.depth.live.wallpaper",
         appIconColor = 0x1A1A2E,
-        targets = listOf(AppTarget(version = "2.1.01"))
+        targets = listOf(AppTarget(version = null))
     )
 }
