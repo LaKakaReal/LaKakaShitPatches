@@ -30,7 +30,7 @@ Or manually add this repository url as a patch source in Morphe: https://github.
 
 ### 📙 Contributing
 
-Thank you for considering contributing to UserXYZ Morphe Patches.  
+Thank you for considering contributing to LaKaka's Morphe Patches.  
 You can find the contribution guidelines [here](CONTRIBUTING.md).
 
 ### 🛠️ Building
