@@ -6,6 +6,8 @@ Repository for LaKaka's crappy slop patches compatible with Morphe.
 
 Hello! Everything here is AI generated. I am using this to learn so I can hopefully evolve past vibecoding, but all patches here work with Morphe if you wanna use 'em.
 
+> ⚠️ **Disclaimer:** This repository and the patches within it are created strictly for educational, research, and personal hobbyist purposes. They are designed to demonstrate how application logic works and how patches interact with Morphe. Use these patches at your own discretion. Please support the developers if you enjoy their work. If you are a developer, open a [**takedown request**](https://github.com/LaKakaReal/LaKakaShitPatches/issues/new?template=takedown_request.yml) in issues and the patch will be removed promptly.
+
 ## 🩹 Patches list
 
 <!-- PATCHES_START EXPANDED -->
